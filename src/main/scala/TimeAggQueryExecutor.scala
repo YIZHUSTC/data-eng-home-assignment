@@ -42,10 +42,10 @@ class TimeAggQueryExecutor(spark: SparkSession) {
 
     if (query.by.getOrElse("notspecified") != "notspecified") {
       df = df.groupBy("slot", query.by.get.toString()).count().
-        withColumnRenamed(query.by.get.toString(), "by").sort($"slot", $"by")
+        withColumnRenamed(query.by.get.toString(), "by").orderBy($"slot", $"by")
     }
     else {
-      df = df.groupBy("slot").count().sort("slot")
+      df = df.groupBy("slot").count().orderBy("slot")
     }
 
     return df
